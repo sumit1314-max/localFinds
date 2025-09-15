@@ -1,0 +1,131 @@
+export const categories = [
+  { id: 1, name: 'Markets', icon: 'store', color: '#3b82f6' },
+  { id: 2, name: 'Grocery', icon: 'cart', color: '#3b82f6' },
+  { id: 3, name: 'Events', icon: 'calendar', color: '#3b82f6' },
+  { id: 4, name: 'Concerts', icon: 'musical-notes', color: '#3b82f6' },
+  { id: 5, name: 'Malls', icon: 'bag', color: '#3b82f6' },
+  { id: 6, name: 'Repair', icon: 'build', color: '#3b82f6' },
+  { id: 7, name: 'Tuition', icon: 'school', color: '#3b82f6' },
+  { id: 8, name: 'Hotels', icon: 'bed', color: '#3b82f6' },
+];
+
+export const marketData = [
+  {
+    id: 1,
+    name: 'Farmers Market',
+    category: 'Markets',
+    distance: 1.2,
+    location: { latitude: 40.7128, longitude: -74.0060 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBQXnqImtWPRXWVYmtZFq_tz75-Eze5DVHjqZ-kIohKa_u9ZpQOCPuZoPwxOYr89IOlR9qWAMN_1DWiN3m3_ylDK9V7bjFrXQxp1d77BYqNh0MJ64bOfGZGDs93JXR33l-9oacGyijdUgIkAkIcFAXn6719ZHIOf-jAZQUJKGVzAo2fCkPvCGGWUQ2x5ZOg1G5vrVKr0IpQoGuvI4ehr8IiPVe7QnlkUMpAE7jwjfxp8I5J_zvRtXE2YCSTl1p_rqOUqnsIH_B6_jU',
+    description: 'Fresh local produce and artisanal goods',
+    rating: 4.5,
+    offers: [
+      {
+        id: 1,
+        title: '20% Off Fresh Vegetables',
+        description: 'Valid on weekends only',
+        validUntil: '2024-07-31',
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: 'Local Crafts Fair',
+    category: 'Markets',
+    distance: 2.5,
+    location: { latitude: 40.7589, longitude: -73.9851 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCy8ndh5DzxI8G-4PgYrFnmW67PU6zdDX6RKGDOCmLiRLxG3Q1CXFmcLxc9meBVLB6T_zl8HjLFbxdPajS9602lNGK4On7denJwi52sCu8BEbPgwJUHFJSe4B6FEaXZBCLSDyhcJeYEGSpiplQFfWUals4M3-jZAe7t8SsREsDWg6zStWVP5zhCvFd088xzCAbuk-nuK1FleyOb3sq16c5CY923eYhVBth93HlkEwg_2d0kV7tWhckTxnk1DrCtgVIdkSSjx8hhZ0o',
+    description: 'Handmade crafts and unique local products',
+    rating: 4.2,
+    offers: [],
+  },
+  {
+    id: 3,
+    name: 'Vintage Clothing Market',
+    category: 'Markets',
+    distance: 3.1,
+    location: { latitude: 40.7505, longitude: -73.9934 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAIAbVCfkxloyinkw0zbJbLOiZp9js04i3sn1hnNt8oQA_Z8X6qzvBqTCwYw9OsRtNU6tPX8jl3zVQAWbKzCqCpJdjqlNWDKz3vNnXb0_rYvPIfN3U2_baY3dL-AgeGpz_fzwT5XtgHSwZCWIdSD6GAwBddv_5cYGMPdP5Ap04MfT-dd8-f4Ga94znVtYiMys-jE0yI7hxbXGuQMtWHc6BkVFwt_sWs1n0CloxjnxH8ylWlgEBZbB_bkpfQi3KqiIO_blEB8Xz0W38',
+    description: 'Curated vintage and second-hand clothing',
+    rating: 4.0,
+    offers: [
+      {
+        id: 2,
+        title: 'Buy 2 Get 1 Free',
+        description: 'On all vintage items',
+        validUntil: '2024-08-15',
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: 'Artisan Food Market',
+    category: 'Markets',
+    distance: 1.8,
+    location: { latitude: 40.7614, longitude: -73.9776 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCfZOEKgoPtG1w1Vgu793ieao3NCYTeWiRTKUgqOPw_XpfKQYMhc70WrT28CPR7sXw2ue40_yoR1TdZxJacFzThqyux5lulIgoYdb-KR7h5HtYxMR6eiSn4_LxWH9tIx-MIlPIpCXJH-8Ski55dUEpSCfp0zl4iDIVZOYRI_Tx58Oegn55SqA_xmJ9A0lAVWCNDizhDnjC7eQxrnQftKf9_hb5KiiT8m3ssDWQnYqQGa2QcXs9Uo9up57vcI7OSfxToQ7YMpCmXt-Y',
+    description: 'Gourmet food products and specialty items',
+    rating: 4.7,
+    offers: [
+      {
+        id: 3,
+        title: 'Free Tasting Samples',
+        description: 'Try before you buy',
+        validUntil: '2024-12-31',
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: 'Flea Market',
+    category: 'Markets',
+    distance: 4.2,
+    location: { latitude: 40.6892, longitude: -74.0445 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC9y632-ocHva4ZUIFRRQP1j3-PZDyQpONDITNfHTbV8WQqxrtbzSaVt5-5a1cpxjKc9D-upPOPW-Ai8-vw62rFp1qfOhZv2Iajex28BtIDw7d3vyWxlRazgGLtf935Nf0fDUROXraTVWhTTnZPsTFFjRbygtXDpj3JV-rhBoD2ilDCpfx4rp6onrOL682IdYnDE4ACpwKwAKJABIDBAKqPw1kVBteNzSvsSk2EvOcSLDGzQ5X0RqxMy3DwwmWb_QE3eVBj-bwEIZQ',
+    description: 'Antiques, collectibles, and unique finds',
+    rating: 3.8,
+    offers: [],
+  },
+  {
+    id: 6,
+    name: 'Holiday Bazaar',
+    category: 'Markets',
+    distance: 0.9,
+    location: { latitude: 40.7505, longitude: -73.9934 },
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCB6PEaDiuWhZzl_kMQfL74cQNI9xKaLC4D9AyvzoT0UMDmGO66Yx-V9lSYeFxeWYpmsvebSh6Qmpf3RcydPCCB_bgLV-EzAFHRJ3ZaBZngfisN6O5NSYEFtXTRMPUucH2xflAh5X6C1RFHQnfMQKSbWc5uqEeff0KlR32A2qbdVsAdgceDbOO5bIRW90pSzRb2EGF_eX5qzTFzerUlHyehlTJhmgxnOuzBJH56J6VwuyGklGeBTt0U5-zu9Cdsme4NFRwO-wRqzVI',
+    description: 'Seasonal decorations and holiday gifts',
+    rating: 4.3,
+    offers: [
+      {
+        id: 4,
+        title: 'Early Bird Special',
+        description: '10% off before 10 AM',
+        validUntil: '2024-12-25',
+      },
+    ],
+  },
+];
+
+export const featuredBanners = [
+  {
+    id: 1,
+    title: '50% Off on Fresh Groceries',
+    subtitle: 'Find your nearest market now!',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGyTh-01Md-epe2qLbveW8jKZvsM4SFlYED3GP_JSPKSY9sOQA5cvvS7isC23tTMACkXAKLIs17tf7QfaJ4ZhbLWXN5wxB7n_zq3tOTsV1PWkgflbcdASsgyxs6WteJr0as3EQMjWyCmlPl_WLmRRIXLAKp3BRSHXrbiAgdrIZmIYVBLe9gv7yv_w6xnYmTqK8dLnWQYQtzBxmGq6BcrNxC_otlDwETbTteznB5CvIIdk9WvDT37iWmN71hmLDeoHA5AC-t9S9TdU',
+    category: 'Grocery',
+  },
+  {
+    id: 2,
+    title: 'Weekend Music Fest',
+    subtitle: 'Book your tickets today',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGyTh-01Md-epe2qLbveW8jKZvsM4SFlYED3GP_JSPKSY9sOQA5cvvS7isC23tTMACkXAKLIs17tf7QfaJ4ZhbLWXN5wxB7n_zq3tOTsV1PWkgflbcdASsgyxs6WteJr0as3EQMjWyCmlPl_WLmRRIXLAKp3BRSHXrbiAgdrIZmIYVBLe9gv7yv_w6xnYmTqK8dLnWQYQtzBxmGq6BcrNxC_otlDwETbTteznB5CvIIdk9WvDT37iWmN71hmLDeoHA5AC-t9S9TdU',
+    category: 'Concerts',
+  },
+  {
+    id: 3,
+    title: 'Biggest Sale of the Season',
+    subtitle: 'At your favorite shopping mall',
+    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAGyTh-01Md-epe2qLbveW8jKZvsM4SFlYED3GP_JSPKSY9sOQA5cvvS7isC23tTMACkXAKLIs17tf7QfaJ4ZhbLWXN5wxB7n_zq3tOTsV1PWkgflbcdASsgyxs6WteJr0as3EQMjWyCmlPl_WLmRRIXLAKp3BRSHXrbiAgdrIZmIYVBLe9gv7yv_w6xnYmTqK8dLnWQYQtzBxmGq6BcrNxC_otlDwETbTteznB5CvIIdk9WvDT37iWmN71hmLDeoHA5AC-t9S9TdU',
+    category: 'Malls',
+  },
+];
