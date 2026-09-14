@@ -18,15 +18,24 @@
     "android": {
       "adaptiveIcon": {
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro"
     },
-    "permissions": [
-      "ACCESS_FINE_LOCATION",
-      "ACCESS_COARSE_LOCATION"
-    ],
-    "sdkVersion": "54.0.0"
+    "plugins": [
+      "expo-font",
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow LocalFinds to use your location to find nearby places."
+        }
+      ],
+      "expo-status-bar"
+    ]
   }
 }

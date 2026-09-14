@@ -75,26 +75,29 @@ const CategoriesScreen = ({ navigation, route }) => {
         selectedSubcategory?.name || null
       );
 
-      // Filter by subcategory if selected
       let filteredResults = results;
       if (selectedSubcategory) {
-        filteredResults = results.filter(place => 
-          place.name.toLowerCase().includes(selectedSubcategory.name.toLowerCase()) ||
-          (place.types && place.types.some(type => 
-            type.toLowerCase().includes(selectedSubcategory.name.toLowerCase())
+        const subName = selectedSubcategory.name.toLowerCase();
+        const matched = results.filter((place) =>
+          place.category?.toLowerCase().includes(subName) ||
+          place.name?.toLowerCase().includes(subName) ||
+          (place.types && place.types.some((type) =>
+            String(type).toLowerCase().includes(subName)
           ))
         );
+        filteredResults = matched.length > 0 ? matched : results;
       }
 
-      // Add distance calculation
       const placesWithDistance = filteredResults.map(place => ({
         ...place,
-        distance: place.distance || placesApiService.calculateDistance(
-          userLocation.latitude,
-          userLocation.longitude,
-          place.latitude,
-          place.longitude
-        ).toFixed(1) + ' km away'
+        distance: typeof place.distance === 'string'
+          ? place.distance
+          : placesApiService.calculateDistance(
+              userLocation.latitude,
+              userLocation.longitude,
+              place.latitude,
+              place.longitude
+            ).toFixed(1) + ' km away'
       }));
 
       setMarketData(placesWithDistance);
@@ -110,7 +113,13 @@ const CategoriesScreen = ({ navigation, route }) => {
       
     } catch (error) {
       console.error('Error searching places:', error);
-      setMarketData(mockData); // Fallback to mock data
+      const fallback = placesApiService.getDummyPlaces(
+        userLocation.latitude,
+        userLocation.longitude,
+        category.name,
+        selectedSubcategory?.name || null
+      );
+      setMarketData(fallback);
     } finally {
       setLoading(false);
     }
@@ -172,14 +181,15 @@ const CategoriesScreen = ({ navigation, route }) => {
     if (!selectedSubcategory) {
       return marketData;
     }
-    // Filter based on subcategory type - in real app, you'd have more sophisticated filtering
-    return marketData.filter(item => 
+    const filtered = marketData.filter(item => 
+      item.category?.toLowerCase().includes(selectedSubcategory.name.toLowerCase()) ||
       item.name.toLowerCase().includes(selectedSubcategory.name.toLowerCase()) ||
       item.type === selectedSubcategory.name ||
       (item.types && item.types.some(type => 
-        type.toLowerCase().includes(selectedSubcategory.name.toLowerCase())
+        String(type).toLowerCase().includes(selectedSubcategory.name.toLowerCase())
       ))
     );
+    return filtered.length > 0 ? filtered : marketData;
   };
 
   const renderMarketItem = ({ item }) => {

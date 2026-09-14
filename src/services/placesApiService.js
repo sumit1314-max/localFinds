@@ -434,13 +434,18 @@ class PlacesApiService {
 
       // Remove duplicates based on name and location
       const uniqueResults = this.removeDuplicates(allResults);
-      
+
+      if (uniqueResults.length === 0) {
+        console.log('📦 No API results — using dummy places for this category');
+        return this.getDummyPlaces(latitude, longitude, category, subcategory);
+      }
+
       console.log(`✅ Found ${uniqueResults.length} total places from all APIs`);
       return uniqueResults;
 
     } catch (error) {
       console.error('Places search error:', error);
-      return [];
+      return this.getDummyPlaces(latitude, longitude, category, subcategory);
     }
   }
 
@@ -450,32 +455,32 @@ class PlacesApiService {
       console.log(`🎯 Category-specific search for ${category} ${subcategory ? `> ${subcategory}` : ''}`);
       
       switch (category) {
+        case 'Events':
         case 'Events & Entertainment':
           console.log(`🎪 Calling Eventbrite API for ${subcategory || 'all events'}`);
           const eventbriteResults = await eventbriteAPI.searchEvents(latitude, longitude, radius, subcategory);
           console.log(`🎪 Eventbrite returned ${eventbriteResults.length} events`);
-          return eventbriteResults;
-        
+          if (eventbriteResults.length > 0) return eventbriteResults;
+          return this.getDummyPlaces(latitude, longitude, category, subcategory);
+
+        case 'Concerts':
         case 'Music & Concerts':
-          return this.getMockMusicData(subcategory);
-        
+        case 'Grocery':
         case 'Food & Grocery':
-          return this.getMockFoodData(subcategory);
-        
+        case 'Repair':
         case 'Services & Repair':
-          return this.getMockServicesData(subcategory);
-        
+        case 'Hotels':
         case 'Hotels & Accommodation':
-          return this.getMockHotelsData(subcategory);
-        
+        case 'Tuition':
         case 'Education & Tuition':
-          return this.getMockEducationData(subcategory);
-        
         case 'Health & Wellness':
-          return this.getMockHealthData(subcategory);
+        case 'Markets':
+        case 'Markets & Shopping':
+        case 'Malls':
+          return [];
         
         default:
-          return []; // For Markets & Shopping, use general APIs
+          return [];
       }
     } catch (error) {
       console.error(`Category-specific API error for ${category}:`, error);
@@ -860,6 +865,124 @@ class PlacesApiService {
     return subcategory 
       ? baseHealth.filter(health => health.category === subcategory)
       : baseHealth;
+  }
+
+  getDummyCatalog() {
+    return {
+      Markets: [
+        { name: 'Sunrise Farmers Market', description: 'Fresh vegetables, fruits, and local produce', category: 'Farmers Market' },
+        { name: 'City Flea Bazaar', description: 'Vintage finds, antiques, and second-hand goods', category: 'Flea Market' },
+        { name: 'Evening Street Market', description: 'Street food stalls and local shopping', category: 'Street Market' },
+      ],
+      Grocery: [
+        { name: 'FreshMart Superstore', description: 'Everyday groceries and household items', category: 'Supermarket' },
+        { name: 'Neighborhood Grocery', description: 'Quick daily essentials near you', category: 'Local Store' },
+        { name: 'GreenLeaf Organic', description: 'Organic grains, produce, and health foods', category: 'Organic Store' },
+      ],
+      Events: [
+        { name: 'Weekend Community Fest', description: 'Music, food stalls, and family activities', category: 'Festivals', date: '2026-09-20', time: '5:00 PM', is_free: true },
+        { name: 'Creative Skills Workshop', description: 'Hands-on session for beginners', category: 'Workshops', date: '2026-09-22', time: '11:00 AM', is_free: false, price: '₹299' },
+        { name: 'Local Art Exhibition', description: 'Paintings and crafts by nearby artists', category: 'Exhibitions', date: '2026-09-27', time: '10:00 AM', is_free: true },
+      ],
+      Concerts: [
+        { name: 'Open Mic Live Night', description: 'Local singers and bands on stage', category: 'Live Music', date: '2026-09-19', time: '8:00 PM', price: '₹499' },
+        { name: 'Sunset DJ Session', description: 'Electronic beats and dance floor', category: 'DJ Events', date: '2026-09-21', time: '9:00 PM', price: '₹799' },
+        { name: 'Campus Band Showcase', description: 'Indie and local band performances', category: 'Local Bands', date: '2026-09-26', time: '7:00 PM', price: '₹350' },
+      ],
+      Malls: [
+        { name: 'Central Plaza Mall', description: 'Shopping, food court, and cinema', category: 'Shopping Mall' },
+        { name: 'Value Outlet Hub', description: 'Brand outlets and discount stores', category: 'Outlet Store' },
+        { name: 'Metro Department Store', description: 'Clothing, home, and lifestyle brands', category: 'Department' },
+      ],
+      Repair: [
+        { name: 'QuickFix Electronics', description: 'Phone, laptop, and gadget repairs', category: 'Electronics', phone: '+91 98765 11111' },
+        { name: 'City Auto Garage', description: 'Car servicing and spare parts', category: 'Automotive', phone: '+91 98765 22222' },
+        { name: 'CycleCare Workshop', description: 'Bike puncture, tune-up, and parts', category: 'Bike Repair', phone: '+91 98765 33333' },
+      ],
+      Tuition: [
+        { name: 'Bright Minds Coaching', description: 'School and board exam tuition', category: 'Academic', subjects: ['Maths', 'Science', 'English'] },
+        { name: 'Harmony Music Studio', description: 'Guitar, keyboard, and vocal classes', category: 'Music Classes', subjects: ['Guitar', 'Keyboard'] },
+        { name: 'Little Artists Studio', description: 'Drawing, painting, and craft batches', category: 'Art & Craft', subjects: ['Drawing', 'Painting'] },
+      ],
+      Hotels: [
+        { name: 'The Grand Stay', description: 'Premium rooms with breakfast included', category: 'Luxury Hotels', priceRange: '₹8,000 - ₹14,000' },
+        { name: 'Comfort Inn Express', description: 'Clean rooms at a fair price', category: 'Budget Hotels', priceRange: '₹2,200 - ₹3,800' },
+        { name: 'Homely Guest House', description: 'Simple stay close to local markets', category: 'Guest House', priceRange: '₹900 - ₹1,600' },
+      ],
+    };
+  }
+
+  getDummyPlaces(latitude, longitude, category, subcategory = null) {
+    const catalog = this.getDummyCatalog();
+    const key = this.normalizeDummyCategory(category);
+    let templates = catalog[key] || catalog.Markets;
+
+    if (subcategory) {
+      const matching = templates.filter((item) =>
+        item.category.toLowerCase().includes(subcategory.toLowerCase()) ||
+        subcategory.toLowerCase().includes(item.category.toLowerCase())
+      );
+      if (matching.length > 0) {
+        templates = matching;
+      } else {
+        templates = templates.slice(0, 3).map((item, index) => ({
+          ...item,
+          name: `${subcategory} Spot ${index + 1}`,
+          category: subcategory,
+          description: `Sample ${subcategory.toLowerCase()} option near you`,
+        }));
+      }
+    }
+
+    const selected = templates.slice(0, 3);
+    const offsets = [
+      [0.008, 0.006],
+      [-0.006, 0.01],
+      [0.004, -0.009],
+    ];
+
+    return selected.map((item, index) => {
+      const [dLat, dLng] = offsets[index] || [0.005, 0.005];
+      const lat = latitude + dLat;
+      const lng = longitude + dLng;
+      const km = this.calculateDistance(latitude, longitude, lat, lng).toFixed(1);
+
+      return {
+        id: `dummy_${key}_${index + 1}_${item.name.replace(/\s+/g, '_').toLowerCase()}`,
+        name: item.name,
+        description: item.description,
+        address: `Near you • ${item.category}`,
+        latitude: lat,
+        longitude: lng,
+        distance: `${km} km away`,
+        category: item.category,
+        types: [item.category, category, subcategory].filter(Boolean),
+        rating: 4.1 + index * 0.2,
+        image: `https://picsum.photos/seed/${encodeURIComponent(item.name)}/400/240`,
+        source: 'Sample listing',
+        date: item.date,
+        time: item.time,
+        is_free: item.is_free,
+        price: item.price,
+        phone: item.phone,
+        priceRange: item.priceRange,
+        subjects: item.subjects,
+      };
+    });
+  }
+
+  normalizeDummyCategory(category = '') {
+    const name = category.toLowerCase();
+    if (name.includes('market')) return 'Markets';
+    if (name.includes('groc') || name.includes('food')) return 'Grocery';
+    if (name.includes('event') || name.includes('entertain')) return 'Events';
+    if (name.includes('concert') || name.includes('music')) return 'Concerts';
+    if (name.includes('mall') || name.includes('shop')) return 'Malls';
+    if (name.includes('repair') || name.includes('service')) return 'Repair';
+    if (name.includes('tuition') || name.includes('educat')) return 'Tuition';
+    if (name.includes('hotel')) return 'Hotels';
+    if (name.includes('health')) return 'Hotels';
+    return 'Markets';
   }
 
   // Remove duplicate results
